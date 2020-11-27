@@ -1,0 +1,29 @@
+{
+  "name": "Final-NodeJS-Lab",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Thedoniki/Final-NodeJS-Lab.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Thedoniki/Final-NodeJS-Lab/issues"
+  },
+  "homepage": "https://github.com/Thedoniki/Final-NodeJS-Lab#readme",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "sqlite": "^4.0.17",
+    "sqlite3": "^5.0.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.6"
+  }
+}
