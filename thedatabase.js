@@ -1,5 +1,7 @@
-const sqlite3 = require('sqlite3');
+const sqlite3 = require('sqlite3').verbose();
+const { request, json } = require('express');
 const { open } = require('sqlite');
+const routes = require('./routes');
 
 // Create a database promise object by connecting to database 
 //https://www.sqlitetutorial.net/sqlite-nodejs/connect/
@@ -11,40 +13,53 @@ const dbPromise = (async () => {
 })();
 
 
-const doQueryCB = () => {
-    open({
-        filename: './thedatabase.sqlite',
-        driver: sqlite3.Database
-    }).then((con) => {
-        con.all('SELECT email, id FROM users ORDER BY email ASC')
-            .then((rows) => {
-                console.log(rows);
-            })
-            .catch(error => {
-                console.log('Something went wrong');
-                console.log(error);
-            });
-        }).catch(error => {
-            console.log(error);
-        }).finally(() => {
-            console.log('Database complete');
-        });
+
+//get product method
+const getProducts = async ()=>{
+    try{
+        
+        const dbCon = await dbPromise;
+        const result = await dbCon.all(" SELECT * FROM products ORDER BY id");
+        return result;
+    }
+    catch (error)
+    {
+        console.log(error);
+    }
 };
 
-const doQuery = async () => {
+const addProducts = async (data)=>{
+
+    try{
+        const dbCon = await dbPromise;
+        const result = await dbCon.run("INSERT INTO products (name, description, price) VALUES (?,?,?)",[data.name, data.discription, data.price, data.id]);
+        return result;
+    }catch(error){
+        console.log(error);
+    }
+}
+
+//eftersom vi har inte database så kör vi den här Arrayen som ersätter som database.
+const getUsers = async () => {
     try {
-        const db = await dbPromise; // väntar in rad 6
-        const users = await db.all('SELECT email, id FROM users ORDER BY email ASC');
-      
-        console.log(users);
-        return users;
+        const dbCon = await dbPromise;
+        const user = await dbCon.all('SELECT * FROM users ORDER by firstname ASC');
+        return user;
     }
-    catch(error) {
-        throw new Error(error);
+    catch (err) {
+        console.log(err);
+        throw new Error('Något gick fel i databasen...');
     }
 };
 
-doQuery();
-(async () => {
-    doQueryCB();
-})();
+
+
+
+// mothoder vi skapar ropar vi genom routes file.
+module.exports = {
+    getUsers: getUsers,
+    getProducts : getProducts,
+    addProducts : addProducts
+
+};
+

@@ -4,6 +4,9 @@ const server = express(); //skapar upp applikation genom anropa konstruktorn på
 const port = 3000; //port 3000 när vi sitter lokat och utv. Över 1024, port 80  får ej anv pga vi ej får binda vår applikation till. 
 const routes = require('./routes');
 
+server.get('/', (req, res) => { 
+    res.send('h18donme@du.se');
+});
 
  //statisk fil -->  levererar endast innehållet. Inget händer. 
  const static = express.static('public'); //foldern/mappen vi vill leveerera statiska filer ifrån. Komemr foldra under public mappen att hantera statiska filer..
@@ -13,9 +16,7 @@ const routes = require('./routes');
 
   
 
-server.get('/', (req, res) => { 
-    res.send('h18donme@du.se');
-});
+
 
 
 
